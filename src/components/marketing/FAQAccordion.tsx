@@ -2,24 +2,24 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Search, HelpCircle } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 
 const faqs = [
   {
-    q: "What if the service gets blocked in my country?",
-    a: "Our infrastructure uses dynamic IP rotation. If a specific gateway is flagged, our system automatically reroutes your traffic through a fresh, unblocked edge server in under 30 seconds. You won't even notice a flicker."
+    q: "How stable is the European server network?",
+    a: "We operate on a private Tier-1 backbone with multiple redundant entry points across Frankfurt, London, and Amsterdam. This architecture guarantees 99.99% uptime even during peak global events."
   },
   {
-    q: "Do I need a VPN to use your service?",
-    a: "No. We provide a built-in 'Private Peer' layer that encrypts your stream metadata. Your ISP will only see generic HTTPS traffic, making a separate VPN unnecessary and often slower."
+    q: "Do I need a VPN to use your infrastructure?",
+    a: "No. Our streams are delivered via a secure, encrypted peer-to-peer layer. Your ISP will only see standard HTTPS traffic, eliminating the need for external VPNs which often throttle speeds."
   },
   {
-    q: "Is the 4K quality truly raw or compressed?",
-    a: "We offer Raw Bitrate streams for major sports and movie channels. Unlike resellers who 're-encode' to save bandwidth, we deliver the direct satellite feed using H.265 HEVC containers."
+    q: "Is the 4K quality truly uncompressed?",
+    a: "Yes. Unlike resellers who transcode feeds to save bandwidth, we deliver the RAW satellite signal using H.265 HEVC containers, maintaining full bitrate and color depth."
   },
   {
-    q: "How many devices can I use simultaneously?",
-    a: "Our standard plans allow 1 active connection. However, the Elite 1-Year plan can be upgraded to 3 simultaneous connections via our support portal after activation."
+    q: "How many devices are supported?",
+    a: "Standard plans support 1 active connection. Premium and Enterprise tiers support up to 3 simultaneous sessions with dedicated bandwidth allocation."
   }
 ];
 
@@ -33,20 +33,23 @@ export function FAQAccordion() {
   );
 
   return (
-    <section className="py-24 bg-dark-bg/50">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tighter">
-            HAVE <span className="text-brand-gold">QUESTIONS?</span>
+    <section className="py-40 bg-[#020617] border-t border-white/[0.05]">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="text-center mb-24">
+          <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.5em] mb-6">
+            TECHNICAL SUPPORT DESK
           </h2>
+          <h3 className="text-4xl md:text-7xl font-bold text-white mb-12 uppercase tracking-tighter italic leading-none">
+            Institutional <span className="text-slate-600">Knowledge.</span>
+          </h3>
           <div className="relative max-w-xl mx-auto">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-700" />
             <input 
               type="text"
-              placeholder="Search objections or technical queries..."
+              placeholder="Search technical documentation..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-[#0f172a] border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-gold/20 transition-all font-medium"
+              className="w-full bg-white/[0.02] border border-white/10 rounded-sm py-6 pl-14 pr-6 text-white placeholder:text-slate-800 focus:outline-none focus:border-white/20 transition-all font-bold text-[10px] uppercase tracking-widest"
             />
           </div>
         </div>
@@ -55,14 +58,14 @@ export function FAQAccordion() {
           {filteredFaqs.map((faq, i) => (
             <div 
               key={i}
-              className="bg-[#0f172a]/80 backdrop-blur-xl border border-white/[0.05] rounded-2xl overflow-hidden transition-all hover:border-white/10"
+              className="bg-white/[0.01] border border-white/[0.04] rounded-sm overflow-hidden transition-all hover:bg-white/[0.03] group"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between p-6 text-left"
+                className="w-full flex items-center justify-between p-10 text-left"
               >
-                <span className="text-lg font-bold text-gray-200 tracking-tight">{faq.q}</span>
-                <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${openIndex === i ? "rotate-180 text-brand-gold" : ""}`} />
+                <span className="text-sm font-bold text-slate-300 uppercase tracking-widest group-hover:text-white transition-colors">{faq.q}</span>
+                <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-700 ${openIndex === i ? "rotate-180 text-white" : ""}`} />
               </button>
               <AnimatePresence>
                 {openIndex === i && (
@@ -70,23 +73,16 @@ export function FAQAccordion() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <div className="px-6 pb-6 text-gray-400 font-medium leading-relaxed border-t border-white/[0.03] pt-4 flex gap-4">
-                      <HelpCircle className="w-5 h-5 text-brand-gold shrink-0 mt-1" />
-                      <p>{faq.a}</p>
+                    <div className="px-10 pb-10 text-slate-500 font-medium leading-relaxed border-t border-white/[0.03] pt-8">
+                      <p className="max-w-2xl">{faq.a}</p>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
           ))}
-          
-          {filteredFaqs.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-500 font-bold uppercase tracking-widest">No matching results found.</p>
-            </div>
-          )}
         </div>
       </div>
     </section>

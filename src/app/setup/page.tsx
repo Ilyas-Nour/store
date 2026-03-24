@@ -1,80 +1,174 @@
-import { AnimatedSection } from "@/components/ui/AnimatedSection";
-import { DownloadCloud, KeyRound, Play } from "lucide-react";
-import { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Setup Guide | IPTV Premium",
-  description: "Learn how to easily set up your IPTV subscription on any device in 3 simple steps.",
-};
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Tv, 
+  Monitor, 
+  Smartphone, 
+  Zap, 
+  Airplay, 
+  Gamepad2, 
+  CheckCircle2, 
+  MessageSquare,
+  Download,
+  Settings,
+  PlayCircle
+} from "lucide-react";
 
-const steps = [
-  {
-    icon: <DownloadCloud className="w-10 h-10 text-white" />,
-    title: "1. Download Your App",
-    description: "Download 'IPTV Smarters Pro', 'TiviMate', or your preferred IPTV player from your device's App Store. It is available on Smart TVs, Android, iOS, and Firestick.",
-    color: "bg-brand-blue",
-  },
-  {
-    icon: <KeyRound className="w-10 h-10 text-white" />,
-    title: "2. Get Your Code",
-    description: "Purchase a plan and message us on WhatsApp. We will instantly provide your Xtream Codes API login (Username, Password, and Portal URL) or an M3U link.",
-    color: "bg-brand-gold",
-  },
-  {
-    icon: <Play className="w-10 h-10 text-white" />,
-    title: "3. Start Watching",
-    description: "Enter the credentials we provided into your app. It will take a minute to load the channels and EPG. After that, sit back and enjoy!",
-    color: "bg-brand-green",
-  },
+const devices = [
+  { id: "firestick", name: "Firestick", icon: Zap },
+  { id: "samsung", name: "Samsung TV", icon: Tv },
+  { id: "lg", name: "LG TV", icon: Tv },
+  { id: "appletv", name: "Apple TV", icon: Airplay },
+  { id: "androidbox", name: "Android Box", icon: Monitor },
+  { id: "mobile", name: "iOS / Android", icon: Smartphone },
 ];
 
+const setupSteps: Record<string, { title: string; desc: string; icon: any }[]> = {
+  firestick: [
+    { title: "Download Downloader", desc: "Search for 'Downloader' in the App Store and install it.", icon: Download },
+    { title: "Install Player", desc: "Open Downloader and enter the code we provide to install the IPTV player.", icon: Settings },
+    { title: "Login & Stream", desc: "Enter your Xtream Codes credentials and enjoy 15,000+ channels.", icon: PlayCircle },
+  ],
+  samsung: [
+    { title: "Open App Store", desc: "Search for 'IPTV Smarters' or 'Nanomid' in your Samsung Apps.", icon: Download },
+    { title: "Enter Playlist", desc: "Open the app and enter the M3U link or Xtream credentials we sent.", icon: Settings },
+    { title: "Sync & Watch", desc: "Wait for the channel list to sync and start watching in 4K.", icon: PlayCircle },
+  ],
+  lg: [
+    { title: "LG Content Store", desc: "Find 'IPTV Smarters' or 'Smart IPTV' in the LG Content Store.", icon: Download },
+    { title: "Upload Info", desc: "Enter your credentials or MAC address on the app's website as instructed.", icon: Settings },
+    { title: "Enjoy 4K", desc: "Your channels are now loaded. Experience premium 4K streaming.", icon: PlayCircle },
+  ],
+  appletv: [
+    { title: "Get GSE IPTV", desc: "Download 'GSE Smart IPTV' or 'iPlayTV' from the App Store.", icon: Download },
+    { title: "Add XTREAM API", desc: "Select 'Xtream Codes API' and enter your login details.", icon: Settings },
+    { title: "Full Quality", desc: "Experience reference-grade streaming quality on your Apple TV.", icon: PlayCircle },
+  ],
+  androidbox: [
+    { title: "Play Store", desc: "Search for 'TiviMate' or 'OTT Navigator' in the Google Play Store.", icon: Download },
+    { title: "Configure Portal", desc: "Add a new playlist using the Portal URL and credentials.", icon: Settings },
+    { title: "Live Sports", desc: "All premium global sports events are now at your fingertips.", icon: PlayCircle },
+  ],
+  mobile: [
+    { title: "Mobile App", desc: "Download our recommended app from the App Store or Play Store.", icon: Download },
+    { title: "Input Credentials", desc: "Login with the details provided in your order email.", icon: Settings },
+    { title: "Stream Anywhere", desc: "Watch your favorite channels on the go with zero buffering.", icon: PlayCircle },
+  ],
+};
+
 export default function SetupPage() {
+  const [selectedDevice, setSelectedDevice] = useState(devices[0]);
+
   return (
-    <div className="py-24 bg-dark-bg min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Quick & Easy Setup
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            You don&apos;t need any technical skills to set up our service. Follow these three simple steps to start streaming in under 5 minutes.
+    <main className="min-h-screen bg-[#020617] pt-40 pb-32">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center mb-24">
+          <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.6em] mb-6">
+             INSTANT NETWORK ACTIVATION
+          </h2>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-[80px] font-bold text-white mb-8 uppercase tracking-tighter leading-none italic"
+          >
+            Universal <span className="text-slate-600">Setup Guide.</span>
+          </motion.h1>
+          <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto font-medium">
+            Select your hardware below for a professional step-by-step installation guide. Deployment takes less than 5 minutes.
           </p>
-        </AnimatedSection>
-
-        <div className="relative">
-          {/* Connecting line for desktop */}
-          <div className="hidden md:block absolute left-12 top-0 bottom-0 w-1 bg-dark-border" />
-
-          <div className="space-y-12">
-            {steps.map((step, index) => (
-              <AnimatedSection key={index} delay={index * 0.2} className="relative flex flex-col md:flex-row gap-8 items-start">
-                <div className={`relative z-10 flex-shrink-0 w-24 h-24 ${step.color} rounded-2xl flex items-center justify-center shadow-xl shadow-${step.color}/20 transform transition-transform hover:scale-110`}>
-                   {step.icon}
-                </div>
-                
-                <div className="bg-dark-card border border-dark-border rounded-2xl p-8 flex-1 h-full shadow-lg">
-                  <h3 className="text-2xl font-bold text-white mb-4">{step.title}</h3>
-                  <p className="text-gray-400 leading-relaxed text-lg">{step.description}</p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
         </div>
 
-        <AnimatedSection delay={0.8} className="mt-20">
-          <h2 className="text-2xl font-bold text-white mb-8 text-center border-b border-dark-border pb-4">Frequently Asked Questions</h2>
-          <div className="space-y-6">
-            <div className="bg-dark-card border border-dark-border p-6 rounded-xl">
-              <h4 className="text-lg font-bold text-white mb-2">Can I use one subscription on multiple devices?</h4>
-              <p className="text-gray-400">Standard plans allow 1 connection at a time. You can install the app on multiple devices but only watch on one simultaneously. Contact support if you need multi-room connections.</p>
+        {/* Device Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-20">
+          {devices.map((device) => {
+            const Icon = device.icon;
+            const isSelected = selectedDevice.id === device.id;
+            return (
+              <button
+                key={device.id}
+                onClick={() => setSelectedDevice(device)}
+                className={`flex flex-col items-center justify-center p-8 rounded-sm border transition-all duration-500 ${
+                  isSelected 
+                  ? "bg-white border-white text-black scale-105 shadow-2xl" 
+                  : "bg-white/[0.02] border-white/[0.05] text-slate-600 hover:border-white/20 hover:text-white"
+                }`}
+              >
+                <Icon className={`w-8 h-8 mb-4 ${isSelected ? "text-black" : "text-white/20"}`} />
+                <span className="text-[9px] font-bold uppercase tracking-widest">{device.name}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Setup Workflow */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedDevice.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="bg-white/[0.01] border border-white/[0.08] rounded-sm p-10 md:p-20 relative overflow-hidden"
+          >
+            <div className="relative z-10">
+              <div className="flex items-center gap-6 mb-16">
+                <div className="w-16 h-16 bg-white/[0.05] rounded-sm flex items-center justify-center border border-white/[0.1]">
+                  <selectedDevice.icon className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                   <h2 className="text-2xl md:text-4xl font-bold text-white uppercase tracking-tighter leading-none">
+                       {selectedDevice.name}
+                   </h2>
+                   <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-2 px-1">Institutional Deployment</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+                {setupSteps[selectedDevice.id].map((step, index) => {
+                    const StepIcon = step.icon;
+                    return (
+                        <div key={index} className="relative">
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white text-xs font-bold border border-white/20">
+                                    {index + 1}
+                                </div>
+                                <div className="h-px flex-grow bg-white/5" />
+                            </div>
+                            <div>
+                                <StepIcon className="w-12 h-12 text-white mb-6 opacity-40" strokeWidth={1} />
+                                <h3 className="text-xl font-bold text-white mb-4 uppercase tracking-tight">{step.title}</h3>
+                                <p className="text-slate-500 text-sm leading-relaxed font-medium">{step.desc}</p>
+                            </div>
+                        </div>
+                    );
+                })}
+              </div>
+
+              {/* Verified Badge */}
+              <div className="mt-20 pt-16 border-t border-white/[0.05] flex flex-col md:flex-row items-center justify-between gap-12">
+                <div className="flex items-center gap-6">
+                    <CheckCircle2 className="w-8 h-8 text-white/20" />
+                    <div>
+                        <p className="text-white font-bold text-base uppercase tracking-tight">Verified Technical Protocol</p>
+                        <p className="text-slate-600 text-[10px] uppercase tracking-widest font-bold mt-1">SOP VERSION 2026.04</p>
+                    </div>
+                </div>
+                
+                <a
+                  href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}?text=I%20am%20stuck%20setting%20up%20my%20${selectedDevice.name}.%20Can%20you%20help?`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full md:w-auto bg-white hover:bg-slate-200 text-black font-bold px-12 py-6 rounded-full flex items-center justify-center gap-4 uppercase tracking-[0.3em] text-[10px] transition-all hover:-translate-y-1 shadow-2xl"
+                >
+                  <MessageSquare className="w-5 h-5" />
+                  Request Assistance
+                </a>
+              </div>
             </div>
-            <div className="bg-dark-card border border-dark-border p-6 rounded-xl">
-              <h4 className="text-lg font-bold text-white mb-2">Is a VPN required?</h4>
-              <p className="text-gray-400">Our service works flawlessly without a VPN. However, if your ISP is throttling IPTV traffic (especially during big games), using a VPN might improve connection stability.</p>
-            </div>
-          </div>
-        </AnimatedSection>
+          </motion.div>
+        </AnimatePresence>
       </div>
-    </div>
+    </main>
   );
 }

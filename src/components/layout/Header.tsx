@@ -1,102 +1,138 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
-import { Menu, X, PlayCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Logo } from "./Logo";
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "Pricing", href: "/pricing" },
+  { name: "Channels", href: "/channels" },
+  { name: "Reviews", href: "/reviews" },
+  { name: "Setup Guide", href: "/setup" },
+];
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
-  const links = [
-    { href: "/", label: "Home" },
-    { href: "/pricing", label: "Pricing" },
-    { href: "/channels", label: "Channels" },
-    { href: "/reviews", label: "Reviews" },
-    { href: "/setup", label: "Setup Guide" },
-  ];
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-dark-bg/40 backdrop-blur-xl border-b border-white/[0.08]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <Link href="/" className="flex items-center gap-2">
-            <PlayCircle className="w-8 h-8 text-brand-green" />
-            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 tracking-tighter uppercase">
-              IPTV PREMIUM
-            </span>
+    <header
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${
+        isScrolled ? "py-4" : "py-10"
+      }`}
+    >
+      <div className="max-w-[1800px] mx-auto px-6">
+        <div 
+          className={`flex items-center justify-between transition-all duration-700 rounded-full px-12 py-5 ${
+            isScrolled 
+            ? "bg-black/80 backdrop-blur-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]" 
+            : "bg-transparent"
+          }`}
+        >
+          {/* Brand Identity */}
+          <Link href="/">
+            <Logo />
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex flex-1 justify-center items-center gap-10">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+          {/* Institutional Navigation */}
+          <nav className="hidden lg:flex items-center gap-12">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`relative text-[10px] font-bold uppercase tracking-[0.4em] transition-all hover:text-white ${
+                    isActive ? "text-white" : "text-slate-400"
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <motion.div 
+                      layoutId="nav-underline" 
+                      className="absolute -bottom-2 left-0 right-0 h-px bg-white/40"
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-6">
-            <div className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.08] px-4 py-2 rounded-full">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
-              </span>
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest whitespace-nowrap">
-                99.9% Uptime | Edge: 12ms
-              </span>
-            </div>
-
+          {/* Access Control */}
+          <div className="hidden lg:flex items-center gap-10 flex-shrink-0">
             <Link
               href="/pricing"
-              className="bg-white hover:bg-brand-green text-dark-bg hover:text-white font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-widest transition-all"
+              className="text-[10px] font-bold text-white uppercase tracking-[0.4em] border border-white/20 px-8 py-3 rounded-full hover:bg-white hover:text-black transition-all"
             >
               Get Started
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Icon */}
           <button
-            className="md:hidden text-gray-300 hover:text-white"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setMobileMenuOpen(true)}
+            className="lg:hidden p-3 bg-white/5 border border-white/10 rounded-full text-white/80 hover:text-white transition-all"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Elite Mobile Menu */}
       <AnimatePresence>
-        {isOpen && (
+        {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden overflow-hidden bg-dark-card border-b border-dark-border"
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            className="fixed inset-0 z-[200] bg-black/95 flex flex-col p-8"
           >
-            <nav className="flex flex-col px-4 py-4 gap-4">
-              {links.map((link) => (
+            <div className="flex items-center justify-between mb-24">
+              <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                <Logo />
+              </Link>
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-4 bg-white/10 border border-white/10 rounded-full text-white hover:bg-white/20 transition-all"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <nav className="flex flex-col gap-10 mb-20">
+              {navLinks.map((link, i) => (
                 <Link
-                  key={link.href}
+                  key={link.name}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-lg font-medium text-gray-300 hover:text-white"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="group flex items-center gap-6 text-5xl md:text-7xl font-bold text-white uppercase tracking-tighter transition-all hover:text-slate-500"
                 >
-                  {link.label}
+                  <span className="text-[10px] font-black text-slate-800 group-hover:text-white transition-colors">{i+1}.</span>
+                  {link.name}
                 </Link>
               ))}
-              <Link
-                href="/pricing"
-                onClick={() => setIsOpen(false)}
-                className="bg-brand-green text-center text-dark-bg font-semibold px-5 py-3 rounded-xl mt-2"
-              >
-                Get Started
-              </Link>
             </nav>
+
+            <Link
+              href="/pricing"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-auto w-full py-10 bg-white text-black font-bold text-center rounded-3xl text-sm uppercase tracking-[0.5em] hover:bg-slate-200 transition-all shadow-3xl"
+            >
+              Get Started
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,134 +1,126 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
+const bgImages = [
+  "/vod.jpg",
+  "/clapperboard-spilled-popcorn-red-cloth.jpg",
+  "/man-watching-tv-eating-popcorn.jpg",
+  "/sports-tools.jpg"
+];
+
 export function HeroSection() {
-  const words = "THE FUTURE OF CINEMA IS HERE".split(" ");
+  const [currentBg, setCurrentBg] = useState(0);
 
-  const container = {
-    hidden: { opacity: 0 },
-    visible: (i = 1) => ({
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.04 * i },
-    }),
-  };
-
-  const child = {
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring" as const,
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-    hidden: {
-      opacity: 0,
-      y: 20,
-      transition: {
-        type: "spring" as const,
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-  };
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBg((prev) => (prev + 1) % bgImages.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-32 pb-20">
-      <div className="absolute inset-0 z-0 bg-dark-bg">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(34,197,94,0.05),transparent_50%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-bg/0 via-dark-bg/50 to-dark-bg z-10" />
+    <section className="relative h-screen min-h-[750px] flex flex-col items-center justify-center overflow-hidden bg-[#020617] w-full">
+      {/* Cinematic Background Slider with Guaranteed Fallback */}
+      <div className="absolute inset-0 z-0 bg-[#020617]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentBg}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.8 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+            className="absolute inset-0 bg-cover bg-center brightness-[0.7] saturate-[1.2]"
+            style={{ backgroundImage: `url('${bgImages[currentBg]}')` }}
+          />
+        </AnimatePresence>
+        
+        {/* Institutional Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-[#020617] z-10" />
+        <div className="absolute inset-0 bg-black/30 z-10" />
       </div>
 
-      <div className="relative z-20 text-center max-w-6xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl px-4 py-2 rounded-full mb-12 shadow-2xl"
+      <div className="relative z-20 text-center max-w-7xl mx-auto px-6 h-full flex flex-col items-center justify-center pt-24">
+        {/* Institutional Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-5xl md:text-[100px] lg:text-[130px] font-bold leading-[0.85] tracking-[-0.07em] text-white mb-8 max-w-[14ch] mx-auto uppercase drop-shadow-[0_20px_50px_rgba(0,0,0,1)]"
         >
-          <span className="flex items-center gap-2">
-            <span className="text-[10px] font-black text-brand-green uppercase tracking-[0.2em]">
-               Official Ecosystem
-            </span>
-            <span className="w-1 h-1 rounded-full bg-white/20" />
-            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-[0.2em]">
-              Trusted by 10k+ Members
-            </span>
-          </span>
-        </motion.div>
+          THE ULTIMATE <span className="text-white/40">STREAMING</span> AUTHORITY
+        </motion.h1>
 
-        <motion.div
-           variants={container}
-           initial="hidden"
-           animate="visible"
-           className="flex flex-wrap justify-center gap-x-4 mb-8"
-        >
-          {words.map((word, index) => (
-            <motion.span
-              variants={child}
-              key={index}
-              className="text-5xl md:text-[100px] font-black leading-[1] tracking-[-0.04em] text-white"
-            >
-              {word === "CINEMA" ? (
-                <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/30 italic">
-                  {word}
-                </span>
-              ) : word}
-            </motion.span>
-          ))}
-        </motion.div>
-
+        {/* Value Proposition */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto font-medium leading-relaxed tracking-tight"
+          transition={{ duration: 1, delay: 0.4 }}
+          className="text-lg md:text-2xl text-slate-100 mb-12 max-w-3xl mx-auto font-medium leading-relaxed tracking-tight px-4 drop-shadow-xl"
         >
-          Say goodbye to buffering. Experience <span className="text-white">RAW 4K</span> streaming with our proprietary Edge-Network technology. 15,000+ Live Channels and VODs.
+          Institutional-grade <span className="text-white font-bold">4K Native infrastructure</span>. Zero latency direct peering. The only IPTV subscription verified for <span className="text-white font-bold">Professional Sports & Cinema.</span>
         </motion.p>
 
+        {/* Primary Actions */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24"
+          transition={{ duration: 1, delay: 0.6 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full px-4"
         >
           <Link
             href="/pricing"
-            className="group relative w-full sm:w-auto px-12 py-6 bg-white text-dark-bg font-black rounded-2xl text-lg transition-all hover:scale-[1.02] active:scale-[0.98] overflow-hidden"
+            className="group relative w-full sm:w-auto px-12 py-6 bg-white text-black font-bold rounded-full text-base transition-all hover:bg-slate-100 active:scale-[0.98] shadow-2xl flex items-center justify-center gap-3"
           >
-            <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-widest text-sm">
-              Explore Subscriptions
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-brand-green opacity-0 group-hover:opacity-100 transition-opacity" />
+            <span className="uppercase tracking-widest text-xs">Activate Subscription</span>
+            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           
-          <Link
-            href="/channels"
-            className="w-full sm:w-auto px-12 py-6 bg-white/[0.03] border border-white/[0.08] text-white font-black rounded-2xl text-lg backdrop-blur-xl transition-all hover:bg-white/[0.06] hover:border-white/[0.15] uppercase tracking-widest text-sm"
+          <button
+            onClick={() => document.getElementById('pricing-plans')?.scrollIntoView({ behavior: 'smooth' })}
+            className="w-full sm:w-auto px-12 py-6 bg-black/60 border border-white/20 text-white font-bold rounded-full text-base backdrop-blur-3xl transition-all hover:bg-white/[0.1] hover:border-white/[0.3] flex items-center justify-center gap-3 shadow-xl"
           >
-            Full Channel List
-          </Link>
+            <span className="uppercase tracking-widest text-xs">View Pricing</span>
+          </button>
         </motion.div>
 
-        <motion.div
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
-           transition={{ duration: 1, delay: 1.2 }}
-           className="w-full"
+        {/* Trust Infrastructure Grid */}
+        <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="mt-12 md:mt-24 grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/[0.1] pt-12 w-full"
         >
-            <div className="text-center mb-8">
-                <span className="text-[10px] font-black text-gray-600 uppercase tracking-[0.4em]">
-                    Seamlessly Compatible With
-                </span>
+            <div className="flex flex-col items-center">
+                <span className="text-2xl md:text-4xl font-bold text-white mb-2 tracking-tighter drop-shadow-lg">15,000+</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.4em] text-center">Global Channels</span>
             </div>
-            {/* Infinite bar here */}
+            <div className="flex flex-col items-center">
+                <span className="text-2xl md:text-4xl font-bold text-white mb-2 tracking-tighter drop-shadow-lg">4K NATIVE</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.4em] text-center">Reference Quality</span>
+            </div>
+            <div className="flex flex-col items-center hidden md:flex">
+                <span className="text-2xl md:text-4xl font-bold text-white mb-2 tracking-tighter drop-shadow-lg">99.99%</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.4em] text-center">SLA Uptime</span>
+            </div>
+            <div className="flex flex-col items-center hidden md:flex">
+                <span className="text-2xl md:text-4xl font-bold text-white mb-2 tracking-tighter drop-shadow-lg">&lt;10MS</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.4em] text-center">Direct Peering</span>
+            </div>
         </motion.div>
+      </div>
+
+      {/* Modern Slide Indicators */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-4 z-30">
+        {bgImages.map((_, i) => (
+          <div 
+            key={i}
+            className={`h-[2px] transition-all duration-700 rounded-full ${i === currentBg ? "w-12 bg-white" : "w-4 bg-white/20"}`}
+          />
+        ))}
       </div>
     </section>
   );

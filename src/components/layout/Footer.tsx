@@ -1,54 +1,56 @@
 import Link from "next/link";
-import { PlayCircle, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
+import { Logo } from "./Logo";
 
 export function Footer() {
   return (
-    <footer className="bg-dark-card border-t border-dark-border py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div className="col-span-1 md:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2">
-              <PlayCircle className="w-8 h-8 text-brand-green" />
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                IPTV Premium
-              </span>
+    <footer className="bg-[#020617] border-t border-white/[0.05] pt-32 pb-48 md:pb-24">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+          <div className="col-span-1 md:col-span-2 space-y-6">
+            <Link href="/">
+              <Logo className="w-12 h-12" />
             </Link>
-            <p className="text-gray-400 text-sm max-w-sm">
-              The #1 leading provider of high-quality premium IPTV subscriptions. Enjoy 4K UHD streaming with 99.9% uptime, no buffering, and dedicated 24/7 customer support.
+            <p className="text-slate-500 text-sm max-w-sm leading-relaxed font-medium">
+              The #1 leading provider of institutional-grade IPTV subscriptions. Deploying 4K Ultra HD infrastructure with 99.99% SLA uptime, zero buffering, and dedicated European support.
             </p>
-            <div className="flex items-center gap-2 text-brand-green">
+            <div className="flex items-center gap-3 text-white/40">
               <ShieldCheck className="w-5 h-5" />
-              <span className="text-sm font-medium text-gray-300">100% Verified Secure Platform</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest">Enterprise Security Verified</span>
             </div>
           </div>
           
           <div>
-            <h3 className="font-semibold text-white mb-4">Navigation</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/" className="hover:text-brand-green transition-colors">Home</Link></li>
-              <li><Link href="/pricing" className="hover:text-brand-green transition-colors">Pricing</Link></li>
-              <li><Link href="/channels" className="hover:text-brand-green transition-colors">Channels</Link></li>
-              <li><Link href="/reviews" className="hover:text-brand-green transition-colors">Reviews</Link></li>
+            <h3 className="font-bold text-white mb-6 uppercase text-[10px] tracking-[0.3em]">Network</h3>
+            <ul className="space-y-4 text-sm text-slate-500 font-medium">
+              <li><Link href="/" className="hover:text-white transition-colors">Infrastructure</Link></li>
+              <li><Link href="/pricing" className="hover:text-white transition-colors">Subscriptions</Link></li>
+              <li><Link href="/channels" className="hover:text-white transition-colors">Channel Index</Link></li>
+              <li><Link href="/reviews" className="hover:text-white transition-colors">Verified Reviews</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-4">Support</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/setup" className="hover:text-brand-green transition-colors">Setup Guide</Link></li>
-              <li><a href="#" className="hover:text-brand-green transition-colors">FAQ</a></li>
-              <li><a href="#" className="hover:text-brand-green transition-colors">Contact Us</a></li>
-              <li><a href="#" className="hover:text-brand-green transition-colors">Terms of Service</a></li>
+            <h3 className="font-bold text-white mb-6 uppercase text-[10px] tracking-[0.3em]">Governance</h3>
+            <ul className="space-y-4 text-sm text-slate-500 font-medium">
+              <li><Link href="/setup" className="hover:text-white transition-colors">Setup Terminal</Link></li>
+              <li><Link href="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link></li>
+              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">SLA Agreement</a></li>
             </ul>
           </div>
         </div>
         
-        <div className="pt-8 border-t border-dark-border text-center sm:text-left flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
-          <p>© {new Date().getFullYear()} IPTV Premium. All rights reserved.</p>
-          <div className="mt-4 sm:mt-0 flex gap-4">
-            <span>By proceeding, you agree to our policies.</span>
+        <div className="pt-12 border-t border-white/[0.05] text-center sm:text-left flex flex-col sm:flex-row justify-between items-center text-[10px] text-slate-600 font-bold gap-6">
+          <p className="uppercase tracking-widest">© {new Date().getFullYear()} MYONLYIPTV Infrastructure. All Rights Reserved.</p>
+          <div className="flex gap-8 uppercase tracking-widest">
+            <a href="#" className="hover:text-white transition-colors">Compliance</a>
+            <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
           </div>
         </div>
+
+        {/* Extra Spacer for Mobile Overlay and Scroll Margin */}
+        <div className="h-20 lg:hidden" />
       </div>
     </footer>
   );
