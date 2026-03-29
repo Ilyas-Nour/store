@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const allItems = [
   { title: "Premier League 2026", img: "/premier-league.jpg", type: "LIVE 4K" },
@@ -43,10 +44,12 @@ export function ContentShowcase() {
               whileHover={{ scale: 1.02 }}
               className="relative flex-shrink-0 w-48 md:w-64 lg:w-80 aspect-[2/3] rounded-sm overflow-hidden cursor-pointer transition-all border border-white/[0.08]"
             >
-              <img
+              <Image
                 src={item.img}
                 alt={item.title}
-                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                fill
+                className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                sizes="(max-width: 768px) 192px, (max-width: 1024px) 256px, 320px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
                 <p className="text-white font-bold text-xl uppercase tracking-tighter mb-4">

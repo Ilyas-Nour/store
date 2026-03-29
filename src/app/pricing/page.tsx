@@ -69,7 +69,7 @@ export default function PricingPage() {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
             >
-              {(activeTab === "personal" ? PERSONAL_PLANS : POWER_PLANS).map((plan, i) => (
+              {(activeTab === "personal" ? PERSONAL_PLANS : POWER_PLANS).map((plan) => (
                 <PricingCard key={plan.plan} {...plan} />
               ))}
             </motion.div>

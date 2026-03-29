@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { HeroSection } from "@/components/marketing/HeroSection";
-import { PricingSection } from "@/components/marketing/PricingSection";
+import { PricingSection, type Plan } from "@/components/marketing/PricingSection";
 import { ContentShowcase } from "@/components/marketing/ContentShowcase";
 import { LogoMarquee } from "@/components/marketing/LogoMarquee";
 import { ChannelMarquee } from "@/components/marketing/ChannelMarquee";
@@ -13,10 +13,10 @@ import { CheckoutModal } from "@/components/checkout/CheckoutModal";
 
 export default function Home() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [selectedDevice, setSelectedDevice] = useState("");
 
-  const handleSelectPlan = (plan: any, device: string) => {
+  const handleSelectPlan = (plan: Plan, device: string) => {
     setSelectedPlan(plan);
     setSelectedDevice(device);
     setIsCheckoutOpen(true);
@@ -51,7 +51,7 @@ export default function Home() {
       <CheckoutModal 
         isOpen={isCheckoutOpen} 
         onClose={() => setIsCheckoutOpen(false)} 
-        plan={selectedPlan}
+        plan={selectedPlan ? { name: selectedPlan.name, price: parseFloat(selectedPlan.price) } : null}
         device={selectedDevice}
       />
     </div>

@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { Search, MessageSquare, ChevronRight, Globe, Trophy, Film, Tv } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const categories = [
   { id: "all", name: "All Channels", icon: Globe },
@@ -170,9 +171,11 @@ export default function ChannelsPage() {
                       className="bg-white/[0.02] border border-white/[0.06] p-8 rounded-sm flex flex-col items-center justify-center text-center group cursor-pointer transition-all"
                     >
                       <div className="relative w-16 h-16 mb-6 flex items-center justify-center bg-white/[0.03] rounded-sm border border-white/[0.05]">
-                        <img
+                        <Image
                           src={`https://www.google.com/s2/favicons?domain=${channel.domain}&sz=128`}
                           alt={channel.name}
+                          width={40}
+                          height={40}
                           className="w-10 h-10 object-contain transition-all duration-500"
                         />
                       </div>

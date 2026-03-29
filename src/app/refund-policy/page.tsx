@@ -1,7 +1,6 @@
 "use client";
 
-import { ShieldCheck, Calendar, RefreshCcw, FileText } from "lucide-react";
-import { motion } from "framer-motion";
+import { RefreshCcw, FileText } from "lucide-react";
 
 export default function RefundPolicyPage() {
   return (

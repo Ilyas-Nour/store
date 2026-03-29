@@ -1,6 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Image from "next/image";
 
 const logos = [
   { name: "Sky Sports", url: "https://www.google.com/s2/favicons?domain=skysports.com&sz=128" },
@@ -25,9 +23,11 @@ export function LogoMarquee() {
         {[...logos, ...logos, ...logos].map((logo, i) => (
           <div key={i} className="flex items-center gap-4 group">
             <div className="w-24 h-24 bg-white/[0.03] border border-white/[0.05] rounded-xl flex items-center justify-center p-4 transition-all group-hover:bg-white/[0.08] group-hover:scale-110">
-              <img
+              <Image
                 src={logo.url}
                 alt={logo.name}
+                width={56}
+                height={56}
                 className="w-14 h-14 object-contain transition-all duration-700"
               />
             </div>

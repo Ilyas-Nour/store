@@ -4,7 +4,16 @@ import { Check } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const plans = [
+export interface Plan {
+    name: string;
+    duration: string;
+    price: string;
+    features: string[];
+    recommended: boolean;
+    tag?: string;
+}
+
+const plans: Plan[] = [
     {
         name: "Trial Access",
         duration: "1 Month",
@@ -37,7 +46,7 @@ const plans = [
 ];
 
 interface PricingSectionProps {
-    onSelectPlan?: (plan: any, device: string) => void;
+    onSelectPlan?: (plan: Plan, device: string) => void;
 }
 
 export function PricingSection({ onSelectPlan }: PricingSectionProps) {
@@ -89,12 +98,21 @@ export function PricingSection({ onSelectPlan }: PricingSectionProps) {
                         ))}
                     </ul>
 
-                    <Link
-                        href="/pricing"
-                        className={`w-full py-6 rounded-full font-bold uppercase tracking-[0.4em] text-[10px] transition-all ${plan.recommended ? 'bg-white text-black hover:bg-slate-200' : 'bg-transparent border border-white/20 text-white hover:bg-white/5'}`}
-                    >
-                        Activate Access
-                    </Link>
+                    {onSelectPlan ? (
+                        <button
+                            onClick={() => onSelectPlan(plan, "Smart TV")}
+                            className={`w-full py-6 rounded-full font-bold uppercase tracking-[0.4em] text-[10px] transition-all ${plan.recommended ? 'bg-white text-black hover:bg-slate-200' : 'bg-transparent border border-white/20 text-white hover:bg-white/5'}`}
+                        >
+                            Activate Access
+                        </button>
+                    ) : (
+                        <Link
+                            href="/pricing"
+                            className={`w-full py-6 rounded-full font-bold uppercase tracking-[0.4em] text-[10px] transition-all ${plan.recommended ? 'bg-white text-black hover:bg-slate-200' : 'bg-transparent border border-white/20 text-white hover:bg-white/5'}`}
+                        >
+                            Activate Access
+                        </Link>
+                    )}
                 </motion.div>
             ))}
         </div>

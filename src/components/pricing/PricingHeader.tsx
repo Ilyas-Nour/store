@@ -38,7 +38,7 @@ export function PricingHeader() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-medium leading-relaxed"
         >
-          Experience the world's most stable IPTV infrastructure. No buffers, 
+          Experience the world&apos;s most stable IPTV infrastructure. No buffers, 
           no compromises. Just pure <span className="text-white font-bold">4K Ultra HD</span> excellence.
         </motion.p>
         

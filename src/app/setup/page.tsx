@@ -8,12 +8,12 @@ import {
   Smartphone, 
   Zap, 
   Airplay, 
-  Gamepad2, 
   CheckCircle2, 
   MessageSquare,
   Download,
   Settings,
-  PlayCircle
+  PlayCircle,
+  LucideIcon
 } from "lucide-react";
 
 const devices = [
@@ -25,7 +25,7 @@ const devices = [
   { id: "mobile", name: "iOS / Android", icon: Smartphone },
 ];
 
-const setupSteps: Record<string, { title: string; desc: string; icon: any }[]> = {
+const setupSteps: Record<string, { title: string; desc: string; icon: LucideIcon }[]> = {
   firestick: [
     { title: "Download Downloader", desc: "Search for 'Downloader' in the App Store and install it.", icon: Download },
     { title: "Install Player", desc: "Open Downloader and enter the code we provide to install the IPTV player.", icon: Settings },

@@ -2,6 +2,7 @@
 
 import { Star, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const reviews = [
   {
@@ -74,12 +75,12 @@ export function ReviewsGrid() {
               </div>
 
               <p className="text-white text-lg font-medium leading-[1.4] mb-12 tracking-tight italic opacity-80 group-hover:opacity-100 transition-opacity">
-                "{review.text}"
+                &quot;{review.text}&quot;
               </p>
 
               <div className="mt-auto pt-8 border-t border-white/[0.05] flex items-center gap-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-700">
-                    <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                    <Image src={review.avatar} alt={review.name} fill className="object-cover" sizes="48px" />
                 </div>
                 <div>
                    <p className="text-white font-bold text-xs uppercase tracking-widest leading-none">{review.name}</p>

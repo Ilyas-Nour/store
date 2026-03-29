@@ -10,7 +10,6 @@ import {
   Lock, 
   Zap, 
   CheckCircle2, 
-  AlertCircle,
   Copy,
   ExternalLink,
   MessageCircle

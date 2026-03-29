@@ -1,6 +1,6 @@
 "use client";
 
-import { Cpu, Globe, Zap, BarChart3, ShieldCheck, Database } from "lucide-react";
+import { Cpu, Zap, Database } from "lucide-react";
 import { motion } from "framer-motion";
 
 const features = [

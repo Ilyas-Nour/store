@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, X, ShieldCheck, Zap, Globe, MessageSquare } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { motion } from "framer-motion";
 
 const comparisonData = [

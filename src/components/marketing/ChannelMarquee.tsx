@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Image from "next/image";
+
+
 
 const channelsRow1 = [
   { name: "BBC One", url: "https://www.google.com/s2/favicons?domain=bbc.co.uk&sz=128" },
@@ -59,9 +61,11 @@ export function ChannelMarquee() {
           {[...channelsRow1, ...channelsRow1, ...channelsRow1, ...channelsRow1].map((channel, i) => (
             <div key={i} className="flex items-center gap-6 group">
               <div className="w-20 h-20 bg-white/[0.03] border border-white/[0.06] rounded-xl flex items-center justify-center p-4 transition-all group-hover:scale-110">
-                <img
+                <Image
                   src={channel.url}
                   alt={channel.name}
+                  width={48}
+                  height={48}
                   className="w-12 h-12 object-contain"
                 />
               </div>
