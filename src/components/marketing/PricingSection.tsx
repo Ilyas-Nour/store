@@ -36,7 +36,11 @@ const plans = [
     }
 ];
 
-export function PricingSection() {
+interface PricingSectionProps {
+    onSelectPlan?: (plan: any, device: string) => void;
+}
+
+export function PricingSection({ onSelectPlan }: PricingSectionProps) {
   return (
     <section id="pricing-plans" className="py-32 bg-[#020617] relative">
         <div className="max-w-7xl mx-auto px-6 mb-24 text-center">
